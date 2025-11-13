@@ -55,18 +55,20 @@ function App() {
               console.warn('Unable to parse downloads payload', jsonError)
             }
 
-            const errorMessage =
-              typeof data === 'object' && data !== null ? String(data.error ?? '') : ''
-
-            if (response.status === 404) {
-              const isNoStats = errorMessage.toLowerCase().includes('no stats')
-              if (isNoStats) {
+            if (!response.ok) {
+              if (response.status === 404) {
+                console.info(`No download stats yet for ${pkg.name}`)
                 return [pkg.name, 0]
               }
-            }
 
-            if (!response.ok) {
-              throw new Error(`Unable to fetch downloads for ${pkg.displayName}`)
+              const errorMessage =
+                typeof data === 'object' && data !== null ? String(data.error ?? '') : ''
+
+              throw new Error(
+                errorMessage
+                  ? `${pkg.displayName}: ${errorMessage}`
+                  : `Unable to fetch downloads for ${pkg.displayName}`,
+              )
             }
 
             return [pkg.name, data.downloads ?? 0]
@@ -132,6 +134,11 @@ function App() {
         >
           Refresh
         </button>
+        {lastUpdated ? (
+          <span className="timestamp">
+            Updated {lastUpdated.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          </span>
+        ) : null}
       </header>
 
       <section className="controls">
@@ -149,11 +156,6 @@ function App() {
             ))}
           </select>
         </label>
-        {lastUpdated ? (
-          <span className="timestamp">
-            Updated {lastUpdated.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-          </span>
-        ) : null}
       </section>
 
       {error ? (
