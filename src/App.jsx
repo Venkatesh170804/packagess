@@ -7,6 +7,11 @@ const PACKAGES = [
     displayName: 'React Theme Context',
     homepage: 'https://www.npmjs.com/package/@venkateshmedipudi/react-theme-context',
   },
+  {
+    name: '@venkateshmedipudi/react-i18n-lite',
+    displayName: 'React i18n Lite',
+    homepage: 'https://www.npmjs.com/package/@venkateshmedipudi/react-i18n-lite',
+  },
 ]
 
 const PERIOD_OPTIONS = [
