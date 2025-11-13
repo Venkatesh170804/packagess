@@ -48,11 +48,26 @@ function App() {
               { signal: controller.signal },
             )
 
+            let data = {}
+            try {
+              data = await response.json()
+            } catch (jsonError) {
+              console.warn('Unable to parse downloads payload', jsonError)
+            }
+
+            const errorMessage =
+              typeof data === 'object' && data !== null ? String(data.error ?? '') : ''
+
+            if (response.status === 404) {
+              const isNoStats = errorMessage.toLowerCase().includes('no stats')
+              if (isNoStats) {
+                return [pkg.name, 0]
+              }
+            }
+
             if (!response.ok) {
               throw new Error(`Unable to fetch downloads for ${pkg.displayName}`)
             }
-
-            const data = await response.json()
 
             return [pkg.name, data.downloads ?? 0]
           }),
