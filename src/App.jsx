@@ -12,6 +12,11 @@ const PACKAGES = [
     displayName: 'React i18n Lite',
     homepage: 'https://www.npmjs.com/package/@venkateshmedipudi/react-i18n-lite',
   },
+  {
+    name: 'react-clipboard-file-utils',
+    displayName: 'React Clipboard File Utils',
+    homepage: 'https://www.npmjs.com/package/react-clipboard-file-utils',
+  },
 ]
 
 const PERIOD_OPTIONS = [
@@ -126,19 +131,21 @@ function App() {
             linkedin.com/in/venkateshmedipudi
           </a>
         </div>
-        <button
-          type="button"
-          className="refresh-button"
-          onClick={handleRefresh}
-          disabled={status === 'loading'}
-        >
-          Refresh
-        </button>
-        {lastUpdated ? (
-          <span className="timestamp">
-            Updated {lastUpdated.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-          </span>
-        ) : null}
+        <div className="refresh-area">
+          <button
+            type="button"
+            className="refresh-button"
+            onClick={handleRefresh}
+            disabled={status === 'loading'}
+          >
+            Refresh
+          </button>
+          {lastUpdated ? (
+            <span className="timestamp">
+              Updated {lastUpdated.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            </span>
+          ) : null}
+        </div>
       </header>
 
       <section className="controls">
